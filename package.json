@@ -13,7 +13,7 @@
   "keywords": [
     "proxy"
   ],
-  "author": "Stefan Judis",
+  "author": "Stefan Judis <stefanjudis@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/stefanjudis/bouncer-proxy/issues"
