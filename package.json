@@ -1,0 +1,26 @@
+{
+  "name": "bouncer-proxy",
+  "version": "0.0.0",
+  "description": "Proxy server to block certion requests",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stefanjudis/bouncer-proxy.git"
+  },
+  "keywords": [
+    "proxy"
+  ],
+  "author": "Stefan Judis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stefanjudis/bouncer-proxy/issues"
+  },
+  "dependencies": {
+    "http-proxy": "~1.5.3",
+    "lodash": "~2.4.1",
+    "debug": "~2.0.0"
+  }
+}
