@@ -1,6 +1,6 @@
 {
   "name": "bouncer-proxy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Proxy server to block certion requests",
   "main": "index.js",
   "scripts": {
