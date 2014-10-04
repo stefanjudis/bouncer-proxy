@@ -1,5 +1,5 @@
 var _         = require( 'lodash' );
-var debug     = require( 'debug' )( 'proxy' );
+var debug     = require( 'debug' )( 'PROXY' );
 var http      = require( 'http' );
 var httpProxy = require( 'http-proxy' );
 var proxy     = httpProxy.createProxyServer();
@@ -10,8 +10,9 @@ var proxy     = httpProxy.createProxyServer();
  * @type {Object}
  */
 var defaults = {
-  url     : '',
-  allowed : []
+  allowed : [],
+  port    : 8000,
+  url     : ''
 };
 
 /**
@@ -48,7 +49,7 @@ Proxy.prototype._startServer = function() {
     proxy.web( req, res, { target : this.options.url } );
   }.bind( this ) );
 
-  this.server.listen( 8000 );
+  this.server.listen( this.options.port );
 };
 
 
@@ -57,8 +58,9 @@ Proxy.prototype._startServer = function() {
  *
  * @param {String}   url      url
  * @param {Function} callback callback
+ * @param {Object}   context  context
  */
-Proxy.prototype.addAllowedUrl = function( url, callback ) {
+Proxy.prototype.addAllowedUrl = function( url, callback, context ) {
   debug( 'Closing server' );
   this.server.close( function() {
     debug( 'Server closed' );
@@ -69,7 +71,7 @@ Proxy.prototype.addAllowedUrl = function( url, callback ) {
     this._startServer();
 
     if ( typeof callback === 'function' ) {
-      callback();
+      callback.apply( context, [ null, url ] );
     }
   }.bind( this ) );
 };
@@ -80,8 +82,9 @@ Proxy.prototype.addAllowedUrl = function( url, callback ) {
  *
  * @param  {String}   url      url
  * @param  {Function} callback callback
+ * @param {Object}   context  context
  */
-Proxy.prototype.removeAllowedUrl = function( url, callback ) {
+Proxy.prototype.removeAllowedUrl = function( url, callback, context ) {
   var index = _.indexOf( this.options.allowed, url );
 
   if ( index !== '-1' ) {
@@ -90,12 +93,12 @@ Proxy.prototype.removeAllowedUrl = function( url, callback ) {
 
       this.options.allowed.splice( index, 1 );
 
-      debug( 'removed %s to allowed url hosts', url );
+      debug( 'removed %s from allowed url hosts', url );
 
       this._startServer();
 
       if ( typeof callback === 'function' ) {
-        callback();
+        callback.apply( context, [ null, url ] );
       }
     }.bind( this ) );
   } else {
