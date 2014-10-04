@@ -78,6 +78,18 @@ Proxy.prototype.addAllowedUrl = function( url, callback, context ) {
 
 
 /**
+ * Shut down the proxy
+ * @param  {Function} callback callback
+ * @param  {Object}   context  context
+ */
+Proxy.prototype.shutDown = function( callback, context ) {
+  this.server.close( function() {
+    callback.apply( context, [ null ] );
+  } );
+};
+
+
+/**
  * Remove allowed URl from CSP
  *
  * @param  {String}   url      url
